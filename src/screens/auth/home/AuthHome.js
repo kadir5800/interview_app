@@ -1,22 +1,21 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useAuth0, Auth0Provider } from 'react-native-auth0';
-import { useSelector, useDispatch } from 'react-redux';
-import { setUserData } from '../../../redux/actions/authActions';
+import { useAuth0 } from 'react-native-auth0';
+import { useDispatch } from 'react-redux';
+import { setUserData,setAuthToken } from '../../../redux/actions/authActions';
 
 
 
-const HomeScreen = ({ navigation }) => {
-  const { authorize, clearSession, user, error, isLoading } = useAuth0();
+const AuthHome = ({ navigation }) => {
+  const { authorize, user, error,getCredentials, isLoading } = useAuth0();
   const dispatch = useDispatch();
 
   useEffect(() => {
     const checkAuthAndRedirect = async () => {
       if (user != null) {
-        console.log(user);
-        // Kullanıcı giriş yapmışsa, kullanıcı bilgilerini Redux store'a kaydet
         dispatch(setUserData(user));
-        // Ardından ana sayfaya yönlendir
+        const token = await getCredentials();
+        dispatch(setAuthToken(token));
        navigation.replace('AppHome');
       }
     };
@@ -28,8 +27,6 @@ const HomeScreen = ({ navigation }) => {
     try {
       await authorize();
     
-      // Kullanıcı giriş yaptıktan sonra çalışacak kodlar
-      dispatch(setUserData(user));
     } catch (error) {
       console.log('Login failed:', error);
     }
@@ -50,6 +47,7 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Giriş Yap</Text>
         </TouchableOpacity>
       </View>
+      
     </View>
   );
 };
@@ -84,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default AuthHome;
