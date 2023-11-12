@@ -4,7 +4,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 
 
-## Nasıl kurulur/çalıştırılır
+## Nasıl kurulur/çalıştırılır (Bağımlılıklar)
 
 Öncelikle, React Native ile birlikte gönderilen JavaScript _bundler_ olan **Metro**'yu başlatmanız gerekecek.
 
@@ -17,6 +17,7 @@ npm start
 # OR using Yarn
 yarn start
 ```
+
 Metro Bundler'ın kendi terminalinde çalışmasına izin verin. React Native projenizin _root_ dizininden bir yeni terminali açın. _Android_ veya _iOS_ uygulamanızı başlatmak için aşağıdaki komutu çalıştırın:
 ### For Android
 
@@ -39,6 +40,30 @@ yarn ios
 ```
 Bu, uygulamanızı çalıştırmanın bir yoludur; uygulamayı doğrudan sırasıyla Android Studio ve Xcode içinden de çalıştırabilirsiniz.
 
+
+# Bağımlılıklar 
+
+Splash Screen
+```bash
+npm i react-native-splash-screen
+```
+manage.auth0
+```bash
+npm install react-native-auth0 --save
+```
+react-navigation
+```bash
+npm install @react-navigation/native
+npm install react-native-screens react-native-safe-area-context
+npm install @react-navigation/native-stack
+```
+redux
+```bash
+npm install redux
+npm install redux-thunk
+npm install @reduxjs/toolkit
+npm install react-redux
+```
 ## Nasıl kullanılır
 
 

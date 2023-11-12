@@ -1,4 +1,4 @@
-package com.interview_app;
+package com.interviewapp;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
