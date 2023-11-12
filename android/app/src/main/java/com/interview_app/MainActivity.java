@@ -1,4 +1,4 @@
-package com.interview_app;
+package com.interviewapp;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
@@ -20,7 +20,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "interview_app";
+    return "interviewapp";
   }
 
   /**

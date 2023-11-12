@@ -47,7 +47,23 @@ Splash Screen
 ```bash
 npm i react-native-splash-screen
 ```
-
+manage.auth0
+```bash
+npm install react-native-auth0 --save
+```
+react-navigation
+```bash
+npm install @react-navigation/native
+npm install react-native-screens react-native-safe-area-context
+npm install @react-navigation/native-stack
+```
+redux
+```bash
+npm install redux
+npm install redux-thunk
+npm install @reduxjs/toolkit
+npm install react-redux
+```
 ## Nasıl kullanılır
 
 
