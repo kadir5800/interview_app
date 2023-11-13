@@ -1,27 +1,38 @@
 import React, { useEffect } from 'react'
 import { Text, View, Button, Image, StyleSheet, SafeAreaView } from 'react-native'
 import { useAuth0 } from 'react-native-auth0';
+import { useNavigation } from '@react-navigation/native';
 
-const AppProfil = ({ navigation }) => {
+const AppProfil = () => {
     const { user, getCredentials, clearSession } = useAuth0();
+    const navigation = useNavigation();
 
-    //const token=auth.getIdToken();
-    const handleGetToken = async () => {
-        clearSession();
+    const handleLogout = async () => {
+        await clearSession();
         navigation.replace('AuthHome');
-    };
+      };
 
+    useEffect(() => {
+       if(user == null){
+        navigation.replace('AuthHome');
+       }
+    }, [user]);
+    
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.contentContainer}>
-                {user.picture && <Image source={{ uri: user.picture }} style={styles.profileImage} />}
-                <View style={styles.userInfoContainer}>
-                    <Text style={styles.userName}>{user && user.name}</Text>
-                    <Text style={styles.userEmail}>{user && user.email}</Text>
-                </View>
+                {user && (
+                    <React.Fragment>
+                        {user.picture && <Image source={{ uri: user.picture }} style={styles.profileImage} />}
+                        <View style={styles.userInfoContainer}>
+                            <Text style={styles.userName}>{user.name}</Text>
+                            <Text style={styles.userEmail}>{user.email}</Text>
+                        </View>
+                    </React.Fragment>
+                )}
             </View>
             <View style={styles.bottomContainer}>
-                <Button style={styles.logoutBtn} title="Çıkış Yap" onPress={handleGetToken} />
+                <Button style={styles.logoutBtn} title="Çıkış Yap" onPress={handleLogout} />
             </View>
         </SafeAreaView>
     )
@@ -61,14 +72,14 @@ const styles = StyleSheet.create({
         width: '100%',
         marginBottom: 40,
         marginTop: -40,
-        borderRadius:40,
-        padding:10,
+        borderRadius: 40,
+        padding: 10,
     },
     logoutBtn: {
         width: '100%',
-        borderRadius:40,
-        backgroundColor:'#71bdb8',
-        color:'#71bdb8',
+        borderRadius: 40,
+        backgroundColor: '#71bdb8',
+        color: '#71bdb8',
     },
 });
 export default AppProfil;

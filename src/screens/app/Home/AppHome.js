@@ -1,10 +1,11 @@
-import React, { Component, useEffect } from 'react'
-import { Text, View, Button, StyleSheet } from 'react-native'
+import React, { useEffect } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import Profil from '../Profil/AppProfil';
+import Characters from '../Characters/Characters';
+import Series from '../Series/Series';
 
 const SettingsScreen = () => {
   return (
@@ -16,17 +17,15 @@ const SettingsScreen = () => {
 
 const Tab = createBottomTabNavigator();
 const AppHome = ({ navigation }) => {
-
   const { user } = useAuth0();
 
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
-        initialRouteName="Profil"
-        
+        initialRouteName="Characters"
         tabBarOptions={{
-          activeTintColor: '#524F72', 
-          inactiveTintColor: 'white', 
+          activeTintColor: '#524F72',
+          inactiveTintColor: 'white',
         }}
         screenOptions={({ route }) => ({
           tabBarStyle: {
@@ -41,6 +40,10 @@ const AppHome = ({ navigation }) => {
               iconName = 'user';
             } else if (route.name === 'Settings') {
               iconName = 'cog';
+            } else if (route.name === 'Characters') {
+              iconName = 'list';
+            } else if (route.name === 'Series') {
+              iconName = 'book';
             }
 
             // İkona uygun bir FontAwesome ikonu ekleyin
@@ -48,11 +51,13 @@ const AppHome = ({ navigation }) => {
           },
         })}
       >
+        <Tab.Screen options={{ headerShown: false }} name="Characters" component={Characters} />
+        <Tab.Screen options={{ headerShown: false }} name="Series" component={Series} />
+        <Tab.Screen options={{ headerShown: false }} name="Profil" component={() => <Profil navigation={navigation} />} />
         <Tab.Screen options={{ headerShown: false }} name="Settings" component={SettingsScreen} />
-        <Tab.Screen options={{ headerShown: false }} name="Profil" component={Profil} />
       </Tab.Navigator>
     </View>
-
   );
-}
+};
+
 export default AppHome;
