@@ -67,7 +67,11 @@ npm install redux
 npm install redux-thunk
 npm install @reduxjs/toolkit
 npm install react-redux
-```
+``` 
+axios
+```bash
+npm install axios
+``` 
 ## Nasıl kullanılır
 
 

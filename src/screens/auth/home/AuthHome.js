@@ -2,40 +2,42 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
 import { useDispatch } from 'react-redux';
-import { setUserData,setAuthToken } from '../../../redux/actions/authActions';
-
-
+import { setUserData, setAuthToken } from '../../../redux/actions/authActions';
 
 const AuthHome = ({ navigation }) => {
-  const { authorize, user, error,getCredentials, isLoading } = useAuth0();
+  const { authorize, user, getCredentials, isLoading } = useAuth0();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const checkAuthAndRedirect = async () => {
-      if (user != null) {
-        dispatch(setUserData(user));
-        const token = await getCredentials();
-        dispatch(setAuthToken(token));
-       navigation.replace('AppHome');
-      }
-    };
+  const checkAuthAndRedirect = async () => {
+    if (user) {
+      dispatch(setUserData(user));
+      const token = await getCredentials();
+      dispatch(setAuthToken(token));
+      navigation.replace('AppHome');
+    }
+  };
 
+  useEffect(() => {
     checkAuthAndRedirect();
-  }, [user,error, navigation, dispatch]);
+    const unsubscribe = navigation.addListener('focus', checkAuthAndRedirect);
+    return unsubscribe;
+  }, [user, navigation, dispatch, getCredentials]);
 
   const handleLogin = async () => {
     try {
       await authorize();
-    
     } catch (error) {
       console.log('Login failed:', error);
     }
   };
 
   if (isLoading) {
-    return <View style={styles.container}><Text>Loading</Text></View>;
+    return (
+      <View style={styles.container}>
+        <Text>Loading</Text>
+      </View>
+    );
   }
-  const loggedIn = user !== undefined && user !== null;
 
   return (
     <View style={styles.container}>
@@ -43,11 +45,11 @@ const AuthHome = ({ navigation }) => {
       <View style={styles.div}>
         <TouchableOpacity
           style={styles.button}
-          onPress={handleLogin}>
+          onPress={handleLogin}
+        >
           <Text style={styles.buttonText}>Giriş Yap</Text>
         </TouchableOpacity>
       </View>
-      
     </View>
   );
 };
