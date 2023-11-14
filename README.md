@@ -90,7 +90,7 @@ npm install react-native-safe-area-context
 npm install react-native-safe-area-context
 ```
 ## Nasıl kullanılır
-[Giriş Ekranı](src/İmage/image.png)
+![Giriş Ekranı](src/İmage/image.png)
 ![Karekterler Ekranı](src/İmage/image1.png)
 ![Karekter Detayı](src/İmage/image2.png)
 ![Profil Ekranı](src/İmage/image3.png)
