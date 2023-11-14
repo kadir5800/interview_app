@@ -10,9 +10,7 @@ const createdHash = (timestamp, privateKey, publicKey) => {
 
 const getAllSeries = async (searchTerm = '',limit=20, sortBy = 'title') => {
   const timestamp = new Date().getTime();
-  console.log(searchTerm);
-  console.log(limit);
-  console.log(sortBy);
+
 
   const hash = createdHash(timestamp, marvelVeriable.privateKey, marvelVeriable.publicKey);
   const params = {

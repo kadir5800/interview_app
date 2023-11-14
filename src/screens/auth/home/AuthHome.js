@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
 import { useDispatch } from 'react-redux';
 import { setUserData, setAuthToken } from '../../../redux/actions/authActions';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { colorPalette } from '../../../colorPalette';
 
 const AuthHome = ({ navigation }) => {
   const { authorize, user, getCredentials, isLoading } = useAuth0();
@@ -27,26 +29,24 @@ const AuthHome = ({ navigation }) => {
     try {
       await authorize();
     } catch (error) {
-      console.log('Login failed:', error);
+      console.error('Login failed:', error);
     }
   };
 
   if (isLoading) {
     return (
-      <View style={styles.container}>
-        <Text>Loading</Text>
+      <View style={[styles.container, { backgroundColor: colorPalette.background }]}>
+        <Text style={{ color: colorPalette.text }}>Loading</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Hoş Geldiniz!</Text>
+    <View style={[styles.container, { backgroundColor: colorPalette.primary }]}>
+      <Text style={[styles.title, { color: colorPalette.accent }]}>Hoş Geldiniz!</Text>
       <View style={styles.div}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleLogin}
-        >
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Icon name={'sign-in'} color="#fff" size={20} style={styles.icon} />
           <Text style={styles.buttonText}>Giriş Yap</Text>
         </TouchableOpacity>
       </View>
@@ -61,20 +61,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     marginBottom: 20,
+    fontWeight: 'bold',
+  },
+  icon: {
+    marginRight: 10,
   },
   button: {
-    backgroundColor: '#3498db',
-    padding: 10,
+    backgroundColor: colorPalette.accent,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 15,
     width: '80%',
-    borderRadius: 10,
-    marginVertical: 10,
+    borderRadius: 25,
+    marginVertical: 20,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 10,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     textAlign: 'center',
+    marginRight: 10,
   },
   div: {
     flexDirection: 'column',
@@ -83,5 +99,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
+
 
 export default AuthHome;
