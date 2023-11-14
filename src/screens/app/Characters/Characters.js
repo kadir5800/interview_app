@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, FlatList, Text, Image, StyleSheet, TextInput, TouchableOpacity, SafeAreaView, Modal, ScrollView } from 'react-native';
 import { getCharacters } from './getCharacters ';
 import { WebView } from 'react-native-webview';
+import { colorPalette } from '../../../colorPalette';
 
 const Characters = () => {
   const [heroes, setHeroes] = useState([]);
@@ -99,7 +100,6 @@ const Characters = () => {
               {selectedCharacter?.stories?.items.map((story, index) => (
                 <Text key={index}>{story.name}</Text>
               ))}
-
             </ScrollView>
           </View>
         </Modal>
@@ -111,28 +111,29 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#71bdb8',
+    backgroundColor: colorPalette.primary,
     alignItems: 'center',
     padding: 10,
   },
   searchInput: {
     flex: 1,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    backgroundColor: 'white',
+    borderColor: colorPalette.darker,
+    borderRadius: 16,
+    backgroundColor: colorPalette.background,
     padding: 8,
     marginRight: 10,
   },
   container: {
     paddingBottom: 45,
+    backgroundColor: colorPalette.background,
   },
   card: {
     flexDirection: 'row',
     margin: 10,
     padding: 10,
     borderWidth: 1,
-    backgroundColor: '#71bdb8',
+    backgroundColor: colorPalette.primary,
     borderColor: '#ccc',
     borderRadius: 8,
   },
@@ -148,10 +149,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: colorPalette.text,
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: colorPalette.background,
     padding: 10,
   },
   closeButton: {
@@ -160,12 +162,12 @@ const styles = StyleSheet.create({
     right: 5,
     width: 40,
     alignItems: 'center',
-    backgroundColor: '#71bdb8',
+    backgroundColor: colorPalette.primary,
     borderRadius: 30,
     padding: 5,
   },
   closeButtonText: {
-    color: 'black',
+    color: colorPalette.text,
     fontWeight: 'bold',
     fontSize: 20,
   },
@@ -179,25 +181,29 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: colorPalette.text,
   },
   modalDescription: {
     fontSize: 16,
     lineHeight: 24,
-    color: 'gray',
+    color: colorPalette.text,
   },
   modalSectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginVertical: 10,
+    color: colorPalette.text,
   },
   totalCharactersContainer: {
-    backgroundColor: '#71bdb8',
-    padding: 10,
+    backgroundColor: colorPalette.primary,
+    padding: 5,
+    borderBottomLeftRadius:16,
+    borderBottomRightRadius:16,
     alignItems: 'center',
     marginBottom: 10,
   },
   totalCharactersText: {
-    color: 'white',
+    color: colorPalette.text,
     fontSize: 16,
   },
 });

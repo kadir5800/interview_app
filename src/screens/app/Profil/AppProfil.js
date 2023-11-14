@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
-import { Text, View, Button, Image, StyleSheet, SafeAreaView } from 'react-native'
+import { Text, View, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native'
 import { useAuth0 } from 'react-native-auth0';
 import { useNavigation } from '@react-navigation/native';
+import { colorPalette } from '../../../colorPalette';
 
 const AppProfil = () => {
     const { user, getCredentials, clearSession } = useAuth0();
@@ -10,14 +11,14 @@ const AppProfil = () => {
     const handleLogout = async () => {
         await clearSession();
         navigation.replace('AuthHome');
-      };
+    };
 
     useEffect(() => {
-       if(user == null){
-        navigation.replace('AuthHome');
-       }
+        if (user == null) {
+            navigation.replace('AuthHome');
+        }
     }, [user]);
-    
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.contentContainer}>
@@ -32,7 +33,11 @@ const AppProfil = () => {
                 )}
             </View>
             <View style={styles.bottomContainer}>
-                <Button style={styles.logoutBtn} title="Çıkış Yap" onPress={handleLogout} />
+                <TouchableOpacity style={styles.logoutBtn} title="Çıkış Yap" onPress={handleLogout} >
+                    <Text style={styles.textt}>
+                        Çıkış  Yap
+                    </Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
@@ -41,12 +46,12 @@ const AppProfil = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: colorPalette.placeholder,
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 20,
     },
     contentContainer: {
-        flex: 1,
+        marginTop: 30,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -70,16 +75,18 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         width: '100%',
-        marginBottom: 40,
-        marginTop: -40,
-        borderRadius: 40,
-        padding: 10,
     },
     logoutBtn: {
         width: '100%',
-        borderRadius: 40,
-        backgroundColor: '#71bdb8',
-        color: '#71bdb8',
+        height: 50,
+        textAlign:'center',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor: colorPalette.accent,
+    },
+    textt: {
+        color:colorPalette.lighter,
+        fontSize:16,
     },
 });
 export default AppProfil;

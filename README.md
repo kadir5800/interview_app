@@ -2,7 +2,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 # Projenin Amacı
 
-
+Bu proje, React Native kullanılarak geliştirilmiş bir mobil uygulamadır. Auth0 kimlik doğrulama servisi kullanılarak kullanıcı girişi sağlanmış ve [Marvel Developer API](https://developer.marvel.com/) kullanılarak kahraman bilgileri alınmıştır.
 
 ## Nasıl kurulur/çalıştırılır (Bağımlılıklar)
 
@@ -57,8 +57,6 @@ npm install @react-navigation/native
 npm install react-native-screens react-native-safe-area-context
 npm install @react-navigation/native-stack
 npm install react-navigation/bottom-tabs
-npm install react-native-vector-icons
-npm install react-native-paper
 ```
 
 redux
@@ -72,7 +70,33 @@ axios
 ```bash
 npm install axios
 ``` 
+md5
+```bash
+npm react-native-md5
+```
+diğerleri
+```bash
+npm install react-native-vector-icons
+npm install react-native-paper
+npm install react-native-gesture-handler
+npm install @fortawesome/react-native-fontawesome
+npm install @fortawesome/free-solid-svg-icons
+npm install @react-native-picker/picker
+npm install react-native-picker-select
+npm install react-native-reanimated
+npm install react-native-safe-area-context
+npm install react-native-safe-area-context
+npm install react-native-safe-area-context
+npm install react-native-safe-area-context
+```
 ## Nasıl kullanılır
+![Giriş Ekranı](src/İmage/image.png)
+![Karekterler Ekranı](src/İmage/image1.png)
+![Karekter Detayı](src/İmage/image2.png)
+![Profil Ekranı](src/İmage/image3.png)
+![Seriler Listesi](src/İmage/image4.png)
+![Seri Detayı](src/İmage/image5.png)
+![İstatistikler Ekranı](src/İmage/image6.png)
 
 
 1. Open `App.tsx` in your text editor of choice and edit some lines.

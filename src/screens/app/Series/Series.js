@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Modal, ScrollView, TextInput } from 'react-native';
 import { getAllSeries } from './getAllSeries';
 import RNPickerSelect from 'react-native-picker-select';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { colorPalette } from '../../../colorPalette';
 
 const Series = () => {
     const [seriesData, setSeries] = useState([]);
@@ -61,14 +63,6 @@ const Series = () => {
             </View>
         );
     }
-    const sortingOptions = [
-        { label: 'İsim  A-Z', value: 'title' },
-        { label: 'Değiştirilme A-Z', value: 'modified' },
-        { label: 'Başlangıç Yılı A-Z', value: 'startYear' },
-        { label: 'İsim', value: '-title' },
-        { label: 'Değiştirilme Z-A', value: '-modified' },
-        { label: 'Başlangıç Yılı Z-A', value: '-startYear' },
-    ];
 
     return (
         <View style={styles.container}>
@@ -81,24 +75,32 @@ const Series = () => {
                 />
                 <View style={styles.selectView}>
                     <RNPickerSelect
-                        style={{ style: styles.picker }}
+                        style={styles.picker}
                         placeholder={{ label: 'Sıralam ', value: null }}
-                        items={sortingOptions.map(option => ({ label: option.label, value: option.value }))}
+                        items={[
+                            { label: 'İsim  A-Z', value: 'title' },
+                            { label: 'Değiştirilme A-Z', value: 'modified' },
+                            { label: 'Başlangıç Yılı A-Z', value: 'startYear' },
+                            { label: 'İsim', value: '-title' },
+                            { label: 'Değiştirilme Z-A', value: '-modified' },
+                            { label: 'Başlangıç Yılı Z-A', value: '-startYear' },
+                        ]}
                         onValueChange={(itemValue) => setSortingOption(itemValue)}
                     />
                 </View>
             </View>
-            <View style={styles.totalCharactersContainer}>
-                <Text style={styles.totalCharactersText}>Toplam Seri Sayısı: {totalSeries}</Text>
+            <View style={styles.totalSeriesContainer}>
+                <Text style={styles.totalSeriesText}>Toplam Seri Sayısı: {totalSeries}</Text>
             </View>
-            <FlatList
-                data={seriesData}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={renderSeries}
-                onEndReached={handleEndReached}
-                onEndReachedThreshold={0.1}
-            />
-
+            <SafeAreaView style={styles.flatListContainer} >
+                <FlatList
+                    data={seriesData}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={renderSeries}
+                    onEndReached={handleEndReached}
+                    onEndReachedThreshold={0.1}
+                />
+            </SafeAreaView>
             <Modal
                 visible={selectedSeries !== null}
                 animationType="slide"
@@ -109,9 +111,8 @@ const Series = () => {
                     <TouchableOpacity style={styles.closeButton} onPress={closeSeriesModal}>
                         <Text style={styles.closeButtonText}>X</Text>
                     </TouchableOpacity>
-                    <View style={styles.container2}>
-
-                        <Text style={styles.seriesName}>{selectedSeries?.title}</Text>
+                    <View style={styles.modalContent}>
+                        <Text style={styles.seriesTitle}>{selectedSeries?.title}</Text>
                         <Text style={styles.seriesDescription}>{selectedSeries?.description}</Text>
                         {/* Diğer detayları da buraya ekleyebilirsiniz */}
                     </View>
@@ -124,88 +125,111 @@ const Series = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    container2: {
-        marginTop:40,
-    },
-    selectView: {
-        backgroundColor: 'white',
-        borderRadius: 8,
-        height: 45,
-        width: 120,
-    },
-    picker: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 8,
-        width: 120,
-        marginRight: 10,
-    },
-    searchInput: {
-        flex: 1,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        backgroundColor: 'white',
-        padding: 8,
-        marginRight: 10,
+        backgroundColor: colorPalette.background,
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#71bdb8',
+        backgroundColor: colorPalette.primary,
         alignItems: 'center',
         padding: 10,
     },
+    searchInput: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: colorPalette.darker,
+        borderRadius: 16,
+        backgroundColor: 'white',
+        padding: 8,
+        height: 40,
+        marginRight: 10,
+        color: colorPalette.text,
+    },
+    selectView: {
+        backgroundColor: colorPalette.lighter,
+        borderRadius: 16,
+        borderColor: colorPalette.darker,
+        height: 40,
+        alignItems:'center',
+        justifyContent:'center',
+        width: 120,
+        borderWidth: 1,
+    },
+    picker: {
+        borderWidth: 1,
+        borderColor: colorPalette.darker,
+        padding: 8,
+        width: 120,
+        marginRight: 10,
+        color: colorPalette.text,
+    },
+    totalSeriesContainer: {
+        backgroundColor: colorPalette.primary,
+        padding: 5,
+        alignItems: 'center',
+        borderBottomLeftRadius:16,
+        borderBottomRightRadius:16,
+    },
+    totalSeriesText: {
+        color: colorPalette.text,
+        fontSize: 16,
+    },
+    flatListContainer: {
+        flex: 1,
+        backgroundColor: colorPalette.background,
+    },
     seriesItem: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: colorPalette.darker,
         borderRadius: 8,
-        padding: 10,
-        marginVertical: 5,
+        padding: 16,
+        marginHorizontal: 8,
+        marginVertical: 8,
+        backgroundColor: colorPalette.lighter,
     },
     seriesName: {
         fontSize: 16,
         fontWeight: 'bold',
-    },
-    seriesDescription: {
-        fontSize: 14,
-        color: 'gray',
+        color: colorPalette.text,
     },
     modalContainer: {
         flex: 1,
-        backgroundColor: 'white',
-        padding: 10,
+        backgroundColor: colorPalette.background,
     },
     closeButton: {
         position: 'absolute',
-        top: 5,
-        right: 5,
+        top: 16,
+        right: 16,
         width: 40,
+        height: 40,
         alignItems: 'center',
-        backgroundColor: '#71bdb8',
-        borderRadius: 30,
-        padding: 5,
+        justifyContent: 'center',
+        backgroundColor: colorPalette.primary,
+        borderRadius: 20,
     },
     closeButtonText: {
-        color: 'black',
+        color: colorPalette.text,
         fontWeight: 'bold',
-        fontSize: 14,
+        fontSize: 16,
+    },
+    modalContent: {
+        padding: 16,
+        marginTop:40,
+    },
+    seriesTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 8,
+        color: colorPalette.text,
+    },
+    seriesDescription: {
+        fontSize: 16,
+        color: colorPalette.text,
     },
     loadingContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    totalCharactersContainer: {
-        backgroundColor: '#71bdb8',
-        padding: 10,
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    totalCharactersText: {
-        color: 'white',
-        fontSize: 16,
     },
 });
 
